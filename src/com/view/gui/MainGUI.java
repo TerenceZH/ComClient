@@ -10,7 +10,6 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import com.model.Power;
 
 
 public class MainGUI extends JFrame{	
@@ -21,7 +20,6 @@ public class MainGUI extends JFrame{
 	kccxitem,spcxitem,kcpditem,khcxitem,zhcxitem,jylcitem,xsmxitem,jyqkitem,rzitem,spspitem,cxitem,
 	qcjjitem,xxitem,xgmmitem,tcitem;
 	
-	/**构造方法*/
 	public MainGUI(String power,String name){
 		super("进销存管理系统V1.0        欢迎： "+name+"   您的角色是： "+power);
 
@@ -37,44 +35,41 @@ public class MainGUI extends JFrame{
 		desktopPane.setDragMode(JDesktopPane.OUTLINE_DRAG_MODE);
 		this.setVisible(true);
 	}
-	
 
-	
-	/** 创建主窗体的菜单栏*/
 	private JMenuBar createMenuBar(String power){
 		menuBar = new JMenuBar();
 		
 		//基本信息管理菜单
 		menu1 = new JMenu("基本信息");
-		if(power.equals(Power.ADMINSTRATOR.getName())||
-				power.equals(Power.MANAGER.getName())){
+		if(power.equals("系统管理员")||
+				power.equals("总经理")){
 			menu1.setEnabled(false);
 		}
 		menuBar.add(menu1);
 		spitem = new JMenuItem("商品管理");
-		if(!power.equals(Power.STOCKMAN.getName())){
+		if(!power.equals("库存管理员")){
 			spitem.setEnabled(false);
 		}
 		menu1.add(spitem);
 		spflitem  = new JMenuItem("商品分类管理");
-		if(!power.equals(Power.STOCKMAN.getName())){
+		if(!power.equals("库存管理员")){
 			spflitem.setEnabled(false);
 		}
 		menu1.add(spflitem);
 		khitem =  new JMenuItem("客户管理");
-		if(!power.equals(Power.SALESMAN.getName())){
+		if(!power.equals("进销人员")){
 			khitem.setEnabled(false);
 		}
 		menu1.add(khitem);
 		zhitem = new JMenuItem("账户管理");
-		if(!power.equals(Power.ACCOUNT.getName())){
+		if(!power.equals("财务人员")){
 			zhitem.setEnabled(false);
 		}
 		menu1.add(zhitem);
 		
 		//进货销售管理菜单
 		menu2 = new JMenu("进货销售");
-		if(!power.equals(Power.SALESMAN)){
+		if(!power.equals("进销人员")){
 			menu2.setEnabled(false);
 		}
 		menuBar.add(menu2);
@@ -85,7 +80,7 @@ public class MainGUI extends JFrame{
 		
 		//库存单管理菜单
 		menu3 =  new JMenu("库存单");
-		if(!power.equals(Power.STOCKMAN.getName())){
+		if(!power.equals("库存管理员")){
 			menu3.setEnabled(false);
 		}
 		menuBar.add(menu3);
@@ -101,32 +96,32 @@ public class MainGUI extends JFrame{
 		
 		//查询菜单
 		menu4 = new JMenu("基本查询");
-		if(power.equals(Power.ADMINSTRATOR.getName())||power.equals(Power.MANAGER.getName())){
+		if(power.equals("系统管理员")||power.equals("总经理")){
 			menu4.setEnabled(false);			
 		}
 		menuBar.add(menu4);
 		kccxitem = new JMenuItem("库存查询");
-		if(!power.equals(Power.STOCKMAN.getName())){
+		if(!power.equals("库存管理员")){
 			kccxitem.setEnabled(false);
 		}
 		menu4.add(kccxitem);
 		spcxitem = new JMenuItem("商品查询");
-		if(!power.equals(Power.STOCKMAN.getName())){
+		if(!power.equals("库存管理员")){
 			spcxitem.setEnabled(false);
 		}
 		menu4.add(spcxitem);
 		kcpditem = new JMenuItem("库存盘点");
-		if(!power.equals(Power.STOCKMAN.getName())){
+		if(!power.equals("库存管理员")){
 			kcpditem.setEnabled(false);
 		}
 		menu4.add(kcpditem);
 		khcxitem = new JMenuItem("客户查询");
-		if(!power.equals(Power.SALESMAN.getName())){
+		if(!power.equals("进销人员")){
 			khcxitem.setEnabled(false);
 		}
 		menu4.add(khcxitem);
 		zhcxitem = new JMenuItem("账户查询");
-		if(!power.equals(Power.ACCOUNT.getName())){
+		if(!power.equals("财务人员")){
 			zhcxitem.setEnabled(false);
 		}
 		menu4.add(zhcxitem);
@@ -134,7 +129,7 @@ public class MainGUI extends JFrame{
 		
 		//高级查询菜单
 		menu5 = new JMenu("明细查询");
-		if(!(power.equals(Power.ACCOUNT.getName())||power.equals(Power.MANAGER.getName()))){
+		if(!(power.equals("财务人员")||power.equals("总经理"))){
 			menu5.setEnabled(false);			
 		}
 		menuBar.add(menu5);
@@ -147,24 +142,24 @@ public class MainGUI extends JFrame{
 		
 		//其他菜单
 		menu6 = new JMenu("其他");
-		if(!(power.equals(Power.ACCOUNT.getName())||power.equals(Power.MANAGER.getName()))){
+		if(!(power.equals("财务人员")||power.equals("总经理"))){
 			menu6.setEnabled(false);
 		}
 		menuBar.add(menu6);
 		rzitem = new JMenuItem("日志");
 		menu6.add(rzitem);
 		cxitem = new JMenuItem("促销");
-		if(!power.equals(Power.MANAGER.getName())){
+		if(!power.equals("总经理")){
 			cxitem.setEnabled(false);
 		}
 		menu6.add(cxitem);
 		spspitem = new JMenuItem("审批");
-		if(!power.equals(Power.MANAGER.getName())){
+		if(!power.equals("总经理")){
 			spspitem.setEnabled(false);
 		}
 		menu6.add(spspitem);
 		qcjjitem = new JMenuItem("期初建账");
-		if(!power.equals(Power.ACCOUNT.getName())){
+		if(!power.equals("财务人员")){
 			qcjjitem.setEnabled(false);
 		}
 		menu6.add(qcjjitem);
@@ -173,15 +168,14 @@ public class MainGUI extends JFrame{
 		menu7  = new JMenu("系统");
 		menuBar.add(menu7);
 		xxitem = new JMenuItem("消息");
-		if(power.equals(Power.ADMINSTRATOR.getName())){
+		if(power.equals("系统管理员")){
 			xxitem.setEnabled(false);
 		}
 		menu7.add(xxitem);
 		xgmmitem = new JMenuItem("修改密码");
-		xgmmitem.setEnabled(false);
 		menu7.add(xgmmitem);
 		JMenuItem glyitem = new JMenuItem("管理员");
-		if(!power.equals(Power.ADMINSTRATOR.getName())){
+		if(!power.equals("系统管理员")){
 			glyitem.setEnabled(false);
 		}
 		menu7.add(glyitem);
@@ -195,8 +189,7 @@ public class MainGUI extends JFrame{
 	
 	/**为menuitem注册监听器 */
 	public void addMainListeners(ActionListener[]a){
-		int len = a.length;
-		if(len!=25){return;}
+		if(a.length!=25){return;}
 		
 		/*spitem,spflitem,khitem,zhitem,jhitem,xsitem,zsditem,byditem,bsditem,bjditem,
 		kccxitem,spcxitem,kcpditem,khcxitem,zhcxitem,jylcitem,xsmxitem,jyqkitem,rzitem,spspitem,cxitem,

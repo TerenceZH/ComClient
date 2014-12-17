@@ -3,18 +3,44 @@ package com.view.vimpl;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import com.model.Users;
+import javax.swing.JInternalFrame;
+
+import com.model.User;
 import com.view.gui.MainGUI;
+import com.view.vinterface.ChangePasswordView;
 import com.view.vinterface.MainView;
 
 public class MainViewImpl implements MainView{
 	private MainGUI gui;
-	public static Users user;
+	public static User user;
+
 	
-	public MainViewImpl(Users u)throws Exception{
-		gui = new MainGUI(u.getType().getName(), u.getUsername());
+	public MainViewImpl(User u){
+		int type = u.getType();
+		String power = "" ;
+		switch (type) {
+		case 0:
+			power = "系统管理员";
+			break;
+		case 1:
+			power = "库存管理员";
+			break;
+		case 2:
+			power = "进销人员";
+			break;
+		case 3:
+			power = "财务人员";
+			break;
+		case 4:
+			power = "总经理";
+			break;
+		default:
+			break;
+		}
+		gui = new MainGUI(power, u.getUsername());
 		gui.addMainListeners(mainListeners);
 	}
+	
 	
 	
 	
@@ -58,7 +84,7 @@ public class MainViewImpl implements MainView{
 		}
 	};
 	
-transient ActionListener jhitemListener = new ActionListener() {
+	transient ActionListener jhitemListener = new ActionListener() {
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -67,17 +93,7 @@ transient ActionListener jhitemListener = new ActionListener() {
 		}
 	};
 	
-transient ActionListener xsitemListener = new ActionListener() {
-		
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
-	};
-	
-	
-transient ActionListener byditemListener = new ActionListener() {
+	transient ActionListener xsitemListener = new ActionListener() {
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -87,16 +103,7 @@ transient ActionListener byditemListener = new ActionListener() {
 	};
 	
 	
-transient ActionListener zsditemListener = new ActionListener() {
-		
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
-	};
-	
-transient ActionListener bjditemListener = new ActionListener() {
+	transient ActionListener byditemListener = new ActionListener() {
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -106,7 +113,16 @@ transient ActionListener bjditemListener = new ActionListener() {
 	};
 	
 	
-transient ActionListener bsditemListener = new ActionListener() {
+	transient ActionListener zsditemListener = new ActionListener() {
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+	};
+	
+	transient ActionListener bjditemListener = new ActionListener() {
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -116,7 +132,7 @@ transient ActionListener bsditemListener = new ActionListener() {
 	};
 	
 	
-transient ActionListener kccxitemListener = new ActionListener() {
+	transient ActionListener bsditemListener = new ActionListener() {
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -126,7 +142,7 @@ transient ActionListener kccxitemListener = new ActionListener() {
 	};
 	
 	
-transient ActionListener spcxitemListener = new ActionListener() {
+	transient ActionListener kccxitemListener = new ActionListener() {
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -136,7 +152,7 @@ transient ActionListener spcxitemListener = new ActionListener() {
 	};
 	
 	
-transient ActionListener kcpditemListener = new ActionListener() {
+	transient ActionListener spcxitemListener = new ActionListener() {
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -146,7 +162,7 @@ transient ActionListener kcpditemListener = new ActionListener() {
 	};
 	
 	
-transient ActionListener khcxitemListener = new ActionListener() {
+	transient ActionListener kcpditemListener = new ActionListener() {
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -156,25 +172,7 @@ transient ActionListener khcxitemListener = new ActionListener() {
 	};
 	
 	
-transient ActionListener zhcxitemListener = new ActionListener() {
-		
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
-	};
-	
-transient ActionListener jylcitemListener = new ActionListener() {
-		
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
-	};
-	
-transient ActionListener jyqkitemListener = new ActionListener() {
+	transient ActionListener khcxitemListener = new ActionListener() {
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -184,7 +182,25 @@ transient ActionListener jyqkitemListener = new ActionListener() {
 	};
 	
 	
-transient ActionListener xsmxitemListener = new ActionListener() {
+	transient ActionListener zhcxitemListener = new ActionListener() {
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+	};
+	
+	transient ActionListener jylcitemListener = new ActionListener() {
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+	};
+	
+	transient ActionListener jyqkitemListener = new ActionListener() {
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -194,7 +210,7 @@ transient ActionListener xsmxitemListener = new ActionListener() {
 	};
 	
 	
-transient ActionListener rzitemListener = new ActionListener() {
+	transient ActionListener xsmxitemListener = new ActionListener() {
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -204,7 +220,17 @@ transient ActionListener rzitemListener = new ActionListener() {
 	};
 	
 	
-transient ActionListener spspitemListener = new ActionListener() {
+	transient ActionListener rzitemListener = new ActionListener() {
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+	};
+	
+	
+	transient ActionListener spspitemListener = new ActionListener() {
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -215,7 +241,7 @@ transient ActionListener spspitemListener = new ActionListener() {
 	
 	
 	
-transient ActionListener cxitemListener = new ActionListener() {
+	transient ActionListener cxitemListener = new ActionListener() {
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -224,7 +250,7 @@ transient ActionListener cxitemListener = new ActionListener() {
 		}
 	};
 	
-transient ActionListener qcjjitemListener = new ActionListener() {
+	transient ActionListener qcjjitemListener = new ActionListener() {
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -233,7 +259,7 @@ transient ActionListener qcjjitemListener = new ActionListener() {
 		}
 	};
 	
-transient ActionListener xxitemListener = new ActionListener() {
+	transient ActionListener xxitemListener = new ActionListener() {
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -242,21 +268,23 @@ transient ActionListener xxitemListener = new ActionListener() {
 		}
 	};
 	
-transient ActionListener xgmmitemListener = new ActionListener() {
+	transient ActionListener xgmmitemListener = new ActionListener() {
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
-			
+			JInternalFrame view = new ChangePasswordViewImpl().getChangePasswordView();
+			gui.getContentPane().add(view);
+			view.setVisible(true);
 		}
 	};
 	
-transient ActionListener tcitemListener = new ActionListener() {
+	transient ActionListener tcitemListener = new ActionListener() {
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
-			
+			System.exit(0);
 		}
 	};
 	
@@ -269,5 +297,7 @@ transient ActionListener tcitemListener = new ActionListener() {
 			bjditemListener,kccxitemListener,spcxitemListener,kcpditemListener,khcxitemListener,zhcxitemListener,jylcitemListener,
 			xsmxitemListener,jyqkitemListener,rzitemListener,spspitemListener,cxitemListener,
 			qcjjitemListener,xxitemListener,xgmmitemListener,tcitemListener};
+
+	
  
 }

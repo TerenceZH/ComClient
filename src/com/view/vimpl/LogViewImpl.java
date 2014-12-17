@@ -3,6 +3,7 @@ package com.view.vimpl;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.rmi.RemoteException;
+
 import com.func.MessageDialog;
 import com.remote_interface.ILogService;
 import com.view.gui.LogGUI;
@@ -55,5 +56,5 @@ public class LogViewImpl implements LogView{
 	};
 
 	ActionListener [] a = {queryByTimeHandler,queryAllHandler};
-	
+
 }

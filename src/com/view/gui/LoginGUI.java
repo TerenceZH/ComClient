@@ -21,16 +21,12 @@ public class LoginGUI extends JFrame{
 	private JPasswordField password;
 	private JButton submit,reset;
 	
-	/**构造方法 */
 	public LoginGUI() {
 		super("进销存管理系统");
 		Dimension screenSize=Toolkit.getDefaultToolkit().getScreenSize();
 		this.setBounds(screenSize.width/3,screenSize.height/3,480,350);
 		this.setResizable(false);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
-		submit=new JButton("确定");		
-		reset=new JButton("重置");
 		
 		loginLayout();
 		this.setVisible(true);
@@ -40,45 +36,33 @@ public class LoginGUI extends JFrame{
 		this.setVisible(false);
 	}
 	
-	/**为两个按钮注册监听器 */
-	public void addLoginListeners(ActionListener[]a){
-		int len = a.length;
-		if(len!=2){return;}
-		
-		submit.addActionListener(a[0]);
-		reset.addActionListener(a[1]);
-	}
 	
-	/**创建图形界面*/
 	private void loginLayout(){
-		JLabel nameLabel;
-		JLabel passwordLabel;
+		JLabel nameLabel,passwordLabel,label;
 		JPanel panel_one, panel_two;
-		JLabel label;
+		
+		submit = new JButton("登陆");
+		reset = new JButton("重置");
+		
 		nameLabel = new JLabel("用户名:  ", JLabel.RIGHT);
 		nameLabel.setForeground(new Color(0, 128, 255));
 		passwordLabel = new JLabel("密码:  ", JLabel.RIGHT);
 		passwordLabel.setForeground(new Color(0, 128, 255));
-		name = new JTextField();
-		name.setColumns(10);
-		password = new JPasswordField();
-		password.setColumns(10);
+		name = new JTextField(10);
+		password = new JPasswordField(10);
 		password.setEchoChar('*');
 		panel_one = new JPanel();
 		panel_one.setLayout(new GridLayout(3, 1));
 		panel_two = new JPanel();
 		this.setLayout(new BorderLayout());
-		this.setContentPane(new JPanel()
-		{
-			public void paintComponent(Graphics g)
-			{
+		this.setContentPane(new JPanel(){
+			public void paintComponent(Graphics g){
 				setDoubleBuffered(true);
 				g.drawImage(new ImageIcon(LoginGUI.class.getResource("image/123.jpg"))
 						.getImage(), 0, 0, null);
 			}
 		});
-		for (int i = 0; i < 18; i++)
-		{
+		for (int i = 0; i < 18; i++){
 			label = new JLabel();
 			label.setPreferredSize(new Dimension(600, 2));
 			this.getContentPane().add(label, BorderLayout.NORTH);
@@ -96,6 +80,17 @@ public class LoginGUI extends JFrame{
 		panel_two.setOpaque(false);
 		this.getContentPane().add(panel_one, BorderLayout.EAST);
 		this.getContentPane().add(panel_two, BorderLayout.SOUTH);
+	}
+	
+	
+	/**为两个按钮注册监听器 */
+	public void addLoginListeners(ActionListener[]a){
+		if(a.length!=2){
+			return;
+		}
+		
+		submit.addActionListener(a[0]);
+		reset.addActionListener(a[1]);
 	}
 	
 	/**以下都是一些平常函数*/
