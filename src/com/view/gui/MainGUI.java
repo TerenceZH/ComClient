@@ -18,7 +18,7 @@ public class MainGUI extends JFrame{
 	private JMenuBar menuBar;
 	private JMenuItem spitem,spflitem,khitem,zhitem,jhitem,xsitem,zsditem,byditem,bsditem,bjditem,
 	kccxitem,spcxitem,kcpditem,khcxitem,zhcxitem,jylcitem,xsmxitem,jyqkitem,rzitem,spspitem,cxitem,
-	qcjjitem,xxitem,xgmmitem,tcitem;
+	qcjjitem,xxitem,xgmmitem,glyitem,tcitem;
 	
 	public MainGUI(String power,String name){
 		super("进销存管理系统V1.0        欢迎： "+name+"   您的角色是： "+power);
@@ -174,7 +174,7 @@ public class MainGUI extends JFrame{
 		menu7.add(xxitem);
 		xgmmitem = new JMenuItem("修改密码");
 		menu7.add(xgmmitem);
-		JMenuItem glyitem = new JMenuItem("管理员");
+		glyitem = new JMenuItem("管理员");
 		if(!power.equals("系统管理员")){
 			glyitem.setEnabled(false);
 		}
@@ -189,7 +189,7 @@ public class MainGUI extends JFrame{
 	
 	/**为menuitem注册监听器 */
 	public void addMainListeners(ActionListener[]a){
-		if(a.length!=25){return;}
+		if(a.length!=26){return;}
 		
 		/*spitem,spflitem,khitem,zhitem,jhitem,xsitem,zsditem,byditem,bsditem,bjditem,
 		kccxitem,spcxitem,kcpditem,khcxitem,zhcxitem,jylcitem,xsmxitem,jyqkitem,rzitem,spspitem,cxitem,
@@ -197,7 +197,7 @@ public class MainGUI extends JFrame{
 		
 		JMenuItem[] items = {spitem,spflitem,khitem,zhitem,jhitem,xsitem,zsditem,byditem,bsditem,bjditem,
 				kccxitem,spcxitem,kcpditem,khcxitem,zhcxitem,jylcitem,xsmxitem,jyqkitem,rzitem,spspitem,cxitem,
-				qcjjitem,xxitem,xgmmitem,tcitem};
+				qcjjitem,xxitem,xgmmitem,glyitem,tcitem};
 		for(int i=0;i<items.length;i++){
 			items[i].addActionListener(a[i]);
 		}

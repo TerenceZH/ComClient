@@ -279,6 +279,17 @@ public class MainViewImpl implements MainView{
 		}
 	};
 	
+	transient ActionListener glyitemListener  = new ActionListener() {
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			JInternalFrame view = new AdministratorViewImpl().getAdministratorView();
+			gui.getContentPane().add(view);
+			view.setVisible(true);
+		}
+	};
+	
 	transient ActionListener tcitemListener = new ActionListener() {
 		
 		@Override
@@ -296,7 +307,7 @@ public class MainViewImpl implements MainView{
 			zhitemListener,jhitemListener,xsitemListener,zsditemListener,byditemListener,bsditemListener,
 			bjditemListener,kccxitemListener,spcxitemListener,kcpditemListener,khcxitemListener,zhcxitemListener,jylcitemListener,
 			xsmxitemListener,jyqkitemListener,rzitemListener,spspitemListener,cxitemListener,
-			qcjjitemListener,xxitemListener,xgmmitemListener,tcitemListener};
+			qcjjitemListener,xxitemListener,xgmmitemListener,glyitemListener,tcitemListener};
 
 	
  
