@@ -264,7 +264,9 @@ public class MainViewImpl implements MainView{
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
-			
+			JInternalFrame view = new MessageViewImpl().getMessageView();
+			gui.getContentPane().add(view);
+			view.setVisible(true);
 		}
 	};
 	
