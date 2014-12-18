@@ -4,6 +4,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.rmi.RemoteException;
 
+import javax.swing.JInternalFrame;
+
 import com.func.MessageDialog;
 import com.model.Customer;
 import com.remote_interface.ICustomerService;
@@ -14,10 +16,15 @@ public class CustomerViewImpl implements CustomerView{
 	private transient CustomerGUI gui;
 	private ICustomerService service;
 	
-	public CustomerViewImpl(ICustomerService s)throws Exception{
+	/*public CustomerViewImpl(ICustomerService s)throws Exception{
 		gui = new CustomerGUI();
 		gui.addCustomerListeners(a);
 		service = s;
+	}*/
+	
+	public CustomerViewImpl(){
+		gui = new CustomerGUI();
+		gui.addCustomerListeners(a);
 	}
 	
 	
@@ -34,17 +41,11 @@ public class CustomerViewImpl implements CustomerView{
 			String zip = gui.getZip();
 			String phone = gui.getPhone();
 			int t = type.equals("进货商")?0:1;
-			double m = max.length()==0?100:Double.parseDouble(max);
+			double m = max.length()==0?0:Double.parseDouble(max);
 			if(name.length()==0){
 				MessageDialog.tip("请填写客户名！");
 			}else {
-				Customer c = new Customer(name,t,name,0,1,phone,address,zip,mail,m,0,0,MainViewImpl.user.getUsername());
-				try {
-					service.addCustomer(c);
-				} catch (RemoteException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+				handleAddCustomer(name, t, phone, address, zip, mail,m);
 			}
 		}
 	};
@@ -55,18 +56,7 @@ public class CustomerViewImpl implements CustomerView{
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
 			String id = gui.getId2();
-			Customer c = null; 
-			try {
-				if(service.queryCustomerByKeyword(id).size()==0){
-					MessageDialog.tip("客户不存在");
-				}else {
-					c = service.queryCustomerByKeyword(id).get(0);
-				}
-			} catch (RemoteException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-			gui.setText(c.getPhone(), c.getAddress(),c.getZip(),c.getMail(),c.getMax_to_get()+"");
+			handleSortCustomer(id);
 		}
 	};
 	
@@ -79,21 +69,63 @@ public class CustomerViewImpl implements CustomerView{
 			String address  = gui.getAddress2();
 			String mail = gui.getMail2();
 			String max = gui.getMax2();
-			double m = max.length()==0?100:Double.parseDouble(max);
+			double m = max.length()==0?0:Double.parseDouble(max);
 			String zip = gui.getZip2();
 			String phone = gui.getPhone2();
-			try{
-			Customer c1 = service.queryCustomerByKeyword(id).get(0);
-			Customer c2 = new Customer(id,c1.getType(),id,c1.getPoint(),c1.getLevel(),phone,address,zip,mail,m,
-					c1.getTo_pay(),c1.getTo_pay(),c1.getDefault_businessman());
-			service.modCustomer(c2);
-			}catch(Exception e3){
-				e3.printStackTrace();
-			}
+			
+			handleModCustomer(id, address, mail, zip, phone, m);
 		}
 	};
 	
 	ActionListener a[] = {addHandler,sortHandler,modHandler};
+
+	@Override
+	public JInternalFrame getCustomerView() {
+		// TODO Auto-generated method stub
+		return gui;
+	}
+
+	@Override
+	public void handleAddCustomer(String name, int type, String phone,
+			String address, String zip, String mail,double max) {
+		// TODO Auto-generated method stub
+		try {
+			service.addCustomer(name, type, address, phone, zip, mail, max,MainViewImpl.user.getId());
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void handleSortCustomer(String no) {
+		// TODO Auto-generated method stub
+		try {
+			Customer customer = service.queryCustomer(no);
+			if(customer==null){
+				MessageDialog.tip("客户不存在！");
+			}else {
+				gui.setText(customer.getPhone(), customer.getAddress(),customer.getZip(),
+						customer.getMail(),customer.getMax()+"");
+			}
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+
+	@Override
+	public void handleModCustomer(String no, String address, String mail,
+			String zip, String phone, double max) {
+		// TODO Auto-generated method stub
+		try {
+			service.modCustomer(no, address, phone, zip, mail, max, MainViewImpl.user.getId());
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	
 
 }

@@ -53,7 +53,9 @@ public class MainViewImpl implements MainView{
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
-			
+			JInternalFrame view = new CommodityViewImpl().getCommodityView();
+			gui.getContentPane().add(view);
+			view.setVisible(true);
 		}
 	};
 	
@@ -73,7 +75,9 @@ public class MainViewImpl implements MainView{
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
-			
+			JInternalFrame view = new CustomerViewImpl().getCustomerView();
+			gui.getContentPane().add(view);
+			view.setVisible(true);
 		}
 	};
 	
@@ -82,7 +86,9 @@ public class MainViewImpl implements MainView{
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
-			
+			JInternalFrame view = new AccountViewImpl().getAccountView();
+			gui.getContentPane().add(view);
+			view.setVisible(true);
 		}
 	};
 	

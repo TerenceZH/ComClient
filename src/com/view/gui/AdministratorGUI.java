@@ -20,7 +20,7 @@ public class AdministratorGUI extends JInternalFrame{
 	private JTextField nameField,infoField,nameField2,passwordField2;
 	private JButton sortbtn,modbtn,addbtn;
 	private JComboBox<String> box,box2,box3;
-	private String type,type2,type3;
+	private String type="最高权限",type2="系统管理员",type3="最高权限";
 	private String[]typeList = {"系统管理员","库存管理员","进销人员","财务人员","总经理"};
 	
 	public AdministratorGUI(){

@@ -33,11 +33,12 @@ public class CommodityGUI extends JInternalFrame{
 	
 	private JTabbedPane tabbedPane;
 
-	public CommodityGUI(){
+	public CommodityGUI(ArrayList<String> list){
 		super("商品信息管理", true, true, false, true);
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		this.setBounds(screenSize.width / 12, screenSize.height / 20,
 				screenSize.width / 2, screenSize.height / 2);
+		cateList = list;
 		this.getContentPane().add(createTabbedPane());
 	}
 	
@@ -67,6 +68,8 @@ public class CommodityGUI extends JInternalFrame{
 	private void addPane(JTabbedPane p){
 		addPanel = new JPanel();
 		addPanel.setLayout(new BoxLayout(addPanel, BoxLayout.Y_AXIS));
+		addbtn = new JButton("添加");
+		resetbtn = new JButton("重置");
 		cname = new JTextField(20);
 		cstyle = new JTextField(20);
 		cinprice = new JTextField(7);
@@ -132,7 +135,7 @@ public class CommodityGUI extends JInternalFrame{
 		sortbtn2 = new JButton("搜索");
 		delbtn2 = new JButton("删除");
 		resetbtn2 = new JButton("重置");
-		info2 = new JTextArea(20,4);
+		info2 = new JTextArea(2,20);
 		
 		JPanel jp1 = new JPanel();
 		JLabel jl1 = new JLabel("商品编号：");
@@ -237,9 +240,6 @@ public class CommodityGUI extends JInternalFrame{
 		return cwarning.getText().trim();
 	}
 	
-	public void setCatelist(ArrayList<String> list){
-		cateList = list;
-	}
 	
 	public void resetAdd(){
 		cname.setText(null);

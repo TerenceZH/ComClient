@@ -7,6 +7,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.ArrayList;
 
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JInternalFrame;
@@ -24,7 +25,7 @@ public class CustomerGUI extends JInternalFrame{
 	private JComboBox<String> box;
 	private JButton addButton,sortButton,modButton;
 	private JTabbedPane tabbedPane;
-	private String type;
+	private String type = "进货商";
 	
 	public CustomerGUI(){
 		super("客户信息管理", true, true, false, true);
@@ -49,7 +50,7 @@ public class CustomerGUI extends JInternalFrame{
 		addressField = new JTextField(10);
 		zipField = new JTextField(10);
 		mailField = new JTextField(10);
-		maxField = new JTextField(5);
+		maxField = new JTextField(8);
 		box = new JComboBox<String>();
 		box.addItem("进货商");
 		box.addItem("销售商");
@@ -94,6 +95,7 @@ public class CustomerGUI extends JInternalFrame{
 		JPanel jp4 = new JPanel();
 		jp4.add(addButton);
 		
+		jPanel.setLayout(new BoxLayout(jPanel, BoxLayout.Y_AXIS));
 		jPanel.add(jp1);
 		jPanel.add(jp2);
 		jPanel.add(jp3);
@@ -140,6 +142,9 @@ public class CustomerGUI extends JInternalFrame{
 		JLabel jl6 = new JLabel("最大额度：");
 		jp4.add(jl6);
 		jp4.add(maxField2);
+		jp4.add(modButton);
+		
+		jp.setLayout(new BoxLayout(jp, BoxLayout.Y_AXIS));
 		
 		jp.add(jp1);
 		jp.add(jp2);

@@ -20,7 +20,7 @@ public class CommodityViewImpl implements CommodityView {
 	private ICommodityService service;
 	
 	
-	public CommodityViewImpl(ICommodityService s)throws Exception{
+/*	public CommodityViewImpl(ICommodityService s)throws Exception{
 		service = s;
 		ArrayList<CommodityCategory> list  = service.getAllCommodityCategories();
 		ArrayList<String> cateList = new ArrayList<String>();
@@ -29,12 +29,22 @@ public class CommodityViewImpl implements CommodityView {
 			cateList.add(cc.getName());
 		}
 		
-		gui.setCatelist(cateList);
 		
-		gui = new CommodityGUI();
+		gui = new CommodityGUI(cateList);
+		gui.addCommodityListener(a);	
+		
+	}*/
+	
+	
+	public CommodityViewImpl(){
+		ArrayList<String> cateList = new ArrayList<String>();
+		cateList.add("请选择");	
+		
+		gui = new CommodityGUI(cateList);
 		gui.addCommodityListener(a);	
 		
 	}
+	
 	
 	
 	transient  ActionListener addPanelAddHandler = new ActionListener() {
@@ -178,7 +188,7 @@ public class CommodityViewImpl implements CommodityView {
 			if(commodity==null){
 				gui.setDelPanelInfo("不存在",false);
 			}else {
-				gui.setDelPanelInfo(commodity.getName()+" "+commodity.getStyle(), true);
+				gui.setDelPanelInfo(commodity.getName()+" \n"+commodity.getStyle(), true);
 			}
 		}catch(Exception e){
 			e.printStackTrace();
@@ -203,7 +213,7 @@ public class CommodityViewImpl implements CommodityView {
 		try{
 			Commodity commodity = service.queryCommodity(no);
 			if(commodity==null){
-				;
+				MessageDialog.tip("商品不存在！");
 			}else {
 				gui.setModPanelInfo(commodity.getInPrice()+"",commodity.getOutPrice()+"",commodity.getWarningQuantity()+"");
 			}
