@@ -7,12 +7,12 @@ import java.rmi.RemoteException;
 import javax.swing.JInternalFrame;
 
 import com.func.MessageDialog;
-import com.remote_interface.IUserSerivce;
+import com.remote_interface.IUserService;
 import com.view.gui.ChangePasswordGUI;
 import com.view.vinterface.ChangePasswordView;
 
 public class ChangePasswordViewImpl implements ChangePasswordView{
-	private IUserSerivce serivce;
+	private IUserService serivce;
 	private ChangePasswordGUI gui;
 	
 	/*public ChangePasswordViewImpl(IUserSerivce s)throws Exception{

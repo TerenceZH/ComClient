@@ -6,14 +6,16 @@ import java.rmi.RemoteException;
 
 import javax.swing.JInternalFrame;
 
+import com.func.CommonFunc;
 import com.func.MessageDialog;
 import com.model.User;
-import com.remote_interface.IUserSerivce;
+import com.remote_interface.ILogService;
+import com.remote_interface.IUserService;
 import com.view.gui.AdministratorGUI;
 import com.view.vinterface.AdministratorView;
 
 public class AdministratorViewImpl implements AdministratorView{
-	private IUserSerivce service;
+	private IUserService service;
 	private AdministratorGUI gui;
 	
 	/*public AdministratorViewImpl(IUserSerivce s) throws Exception{
@@ -38,7 +40,7 @@ public class AdministratorViewImpl implements AdministratorView{
 			String type = gui.getType2();
 			String authority = gui.getType3();
 			
-			int typeInt = getType(type);
+			int typeInt = CommonFunc.getType(type);
 			int auth = getAuth(authority);
 			
 			handleAddUser(name, password, typeInt,auth);
@@ -80,10 +82,10 @@ public class AdministratorViewImpl implements AdministratorView{
 		String auth = gui.getType();
 		
 		if(name.length()==0){
-			MessageDialog.tip("请输入用户名！");
+			MessageDialog.tip("请输入id！");
 		}else {
 			try {
-				service.modUser(name,getAuth(auth));
+				service.modUser(name,getAuth(auth),MainViewImpl.user.getId());
 			} catch (RemoteException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -96,7 +98,7 @@ public class AdministratorViewImpl implements AdministratorView{
 	public void handleSortUser(String name) {
 		// TODO Auto-generated method stub
 		if(name.length()==0){
-			MessageDialog.tip("请输入用户名！");
+			MessageDialog.tip("请输入id！");
 		}else {
 			User u = null;
 			try {
@@ -106,7 +108,7 @@ public class AdministratorViewImpl implements AdministratorView{
 				e.printStackTrace();
 			}
 			String te = u.getGetTopAuthority()==0?"没有":"";
-			gui.setInfo("角色："+getType(u.getType())+"  ;"+te+"最高权限");
+			gui.setInfo("角色："+CommonFunc.getType(u.getType())+"  ;"+te+"最高权限");
 		}
 	}
 
@@ -117,7 +119,7 @@ public class AdministratorViewImpl implements AdministratorView{
 			MessageDialog.tip("用户名或者密码不能为空！");
 		}else {
 			try {
-				service.addUser(name, pwd, type, auth);
+				service.addUser(name, pwd, type, auth,MainViewImpl.user.getId());
 			} catch (RemoteException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -125,7 +127,7 @@ public class AdministratorViewImpl implements AdministratorView{
 		}
 	}
 	
-	private int getType(String s){
+	/*private int getType(String s){
 		int t = -1;
 		switch (s) {
 		case "库存管理员":
@@ -172,7 +174,7 @@ public class AdministratorViewImpl implements AdministratorView{
 			break;
 		}
 		return s;
-	}
+	}*/
 	
 	private int getAuth(String s){
 		return s.equals("最高权限")?1:0;

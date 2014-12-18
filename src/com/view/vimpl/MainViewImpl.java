@@ -62,7 +62,9 @@ public class MainViewImpl implements MainView{
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
-			
+			JInternalFrame view = new CommodityCategoryViewImpl().getCommodityCategoryView();
+			gui.getContentPane().add(view);
+			view.setVisible(true);
 		}
 	};
 	
@@ -225,7 +227,9 @@ public class MainViewImpl implements MainView{
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
-			
+			JInternalFrame view = new LogViewImpl().getLogView();
+			gui.getContentPane().add(view);
+			view.setVisible(true);
 		}
 	};
 	

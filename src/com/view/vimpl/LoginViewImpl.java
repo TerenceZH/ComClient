@@ -5,17 +5,16 @@ import java.awt.event.ActionListener;
 
 import com.func.MessageDialog;
 import com.model.User;
-import com.remote_interface.IUserSerivce;
+import com.remote_interface.IUserService;
 import com.view.gui.LoginGUI;
 import com.view.vinterface.LoginView;
-import com.view.vinterface.MainView;
 
 public class LoginViewImpl implements LoginView{
 	private transient LoginGUI gui;
-	private IUserSerivce service;
+	private IUserService service;
 
 	
-	public LoginViewImpl(IUserSerivce s)throws Exception{
+	public LoginViewImpl(IUserService s)throws Exception{
 		gui = new LoginGUI();
 		gui.addLoginListeners(loginListeners);
 		

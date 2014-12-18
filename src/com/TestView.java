@@ -11,7 +11,7 @@ public class TestView {
 	
 	public static void main(String[] args) {
 		
-		new MainViewImpl(new User("1","2",2,0));
+		new MainViewImpl(new User("1","2",1,0));
 	}
 
 }

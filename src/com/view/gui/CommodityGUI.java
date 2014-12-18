@@ -26,18 +26,19 @@ public class CommodityGUI extends JInternalFrame{
 	private JTextArea info2;
 	private JTextField cid3,cinprice3,coutprice3,cwarning3;
 	private JButton sortbtn3,modbtn3,resetbtn3;
-	private String boxString;
+	private String boxString = "请选择";
+	private ArrayList<String> cateList;
 	
 	private JPanel addPanel,delPanel,modPanel;
 	
 	private JTabbedPane tabbedPane;
 
-	public CommodityGUI(ArrayList<String>cateList){
+	public CommodityGUI(){
 		super("商品信息管理", true, true, false, true);
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		this.setBounds(screenSize.width / 12, screenSize.height / 20,
 				screenSize.width / 2, screenSize.height / 2);
-		this.getContentPane().add(createTabbedPane(cateList));
+		this.getContentPane().add(createTabbedPane());
 	}
 	
 	/**监听*/
@@ -52,10 +53,10 @@ public class CommodityGUI extends JInternalFrame{
 		
 	}
 	
-	private JTabbedPane createTabbedPane(ArrayList<String> list){
+	private JTabbedPane createTabbedPane(){
 		tabbedPane = new JTabbedPane();
 		
-		addPane(tabbedPane,list);
+		addPane(tabbedPane);
 		delPane(tabbedPane);
 		modPane(tabbedPane);
 		
@@ -63,7 +64,7 @@ public class CommodityGUI extends JInternalFrame{
 	}
 	
 	
-	private void addPane(JTabbedPane p,ArrayList<String> lsit){
+	private void addPane(JTabbedPane p){
 		addPanel = new JPanel();
 		addPanel.setLayout(new BoxLayout(addPanel, BoxLayout.Y_AXIS));
 		cname = new JTextField(20);
@@ -93,7 +94,7 @@ public class CommodityGUI extends JInternalFrame{
 		jp2.add(cstyle);
 		JPanel jp = new JPanel();
 		JLabel jl = new JLabel("类别");
-		for(String s:lsit){
+		for(String s:cateList){
 			box.addItem(s);
 		}
 		jp.add(jl);
@@ -234,6 +235,10 @@ public class CommodityGUI extends JInternalFrame{
 	
 	public String getModWarningNum(){
 		return cwarning.getText().trim();
+	}
+	
+	public void setCatelist(ArrayList<String> list){
+		cateList = list;
 	}
 	
 	public void resetAdd(){

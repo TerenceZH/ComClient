@@ -5,9 +5,12 @@ import java.awt.event.ActionListener;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
+import javax.swing.JInternalFrame;
+
 import com.func.CommonFunc;
 import com.func.MessageDialog;
 import com.model.Commodity;
+import com.model.CommodityCategory;
 import com.remote_interface.ICommodityService;
 import com.view.gui.CommodityGUI;
 import com.view.vinterface.CommodityView;
@@ -19,9 +22,16 @@ public class CommodityViewImpl implements CommodityView {
 	
 	public CommodityViewImpl(ICommodityService s)throws Exception{
 		service = s;
-		ArrayList<String> temp = service.getCategory();
+		ArrayList<CommodityCategory> list  = service.getAllCommodityCategories();
+		ArrayList<String> cateList = new ArrayList<String>();
+		cateList.add("请选择");
+		for(CommodityCategory cc:list){
+			cateList.add(cc.getName());
+		}
 		
-		gui = new CommodityGUI(temp);
+		gui.setCatelist(cateList);
+		
+		gui = new CommodityGUI();
 		gui.addCommodityListener(a);	
 		
 	}
@@ -41,20 +51,14 @@ public class CommodityViewImpl implements CommodityView {
 			
 			if(name.length()==0){
 				MessageDialog.tip("请输入商品名称");
+			}else if(cate.equals("请选择")){
+				MessageDialog.tip("请选择类别");
 			}else if(style.length()==0){
 				MessageDialog.tip("请输入商品型号");
 			}else if (warning.length()==0) {
 				MessageDialog.tip("请输入警戒值");
 			}else {
-				try {
-					Commodity c =new Commodity(service.getCommodityId(cate), gui.getAddNameText(), gui.getAddStyleText(), 0,
-							gui.getAddInpriceNum(),gui.getAddOutpriceNum(), 0, 0, 0, Integer.parseInt(gui.getAddWarningNum()),
-							CommonFunc.time(), service.gteCateid(name));
-					service.addCommodity(c);
-				} catch (NumberFormatException | RemoteException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+				handleAddCommodity(name, style, cate, inprice, outprice, Integer.parseInt(warning));
 			}
 		}
 	};
@@ -74,19 +78,7 @@ public class CommodityViewImpl implements CommodityView {
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
 			String id = gui.getDelIdText();
-			try{
-				ArrayList<Commodity> list = service.queryCommodity(2,id);
-				if(list.size()!=0){
-					Commodity c = list.get(0);
-					String text = "名称："+c.getName()+"\n型号："+c.getStyle();
-					gui.setDelPanelInfo(text,service.delIsAble(c));
-				}else{
-					MessageDialog.tip("商品不存在，请确认编号没有输入错误！");
-				}
-				
-			}catch(Exception e1){
-				e1.printStackTrace();
-			}
+			handleSortCommodity(id);
 		}
 	};
 	
@@ -96,11 +88,7 @@ public class CommodityViewImpl implements CommodityView {
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
 			String id = gui.getDelIdText();
-			try{				
-				service.delCommodity(service.queryCommodity(2, id).get(0));
-			}catch(Exception e1){
-				e1.printStackTrace();
-			}
+			handleDelCommodity(id);	
 		}
 	};
 	
@@ -120,17 +108,7 @@ public class CommodityViewImpl implements CommodityView {
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
 			String id = gui.getModIdText();
-			try{
-				ArrayList<Commodity> list = service.queryCommodity(2,id);
-				if(list.size()!=0){
-					Commodity c = list.get(0);
-					gui.setModPanelInfo(c.getInPrice()+"", c.getSalePrice()+"",c.getWarningQuantity()+"");
-				}else{
-					MessageDialog.tip("商品不存在，请确认编号没有输入错误！");
-				}
-			}catch(Exception e1){
-				e1.printStackTrace();
-			}
+			
 		}
 	};
 	
@@ -146,14 +124,7 @@ public class CommodityViewImpl implements CommodityView {
 			if(warning.length()==0){
 				MessageDialog.tip("请输入警戒值");
 			}else {
-				try{
-					Commodity c1 = service.queryCommodity(2, id).get(0);
-					Commodity c2 = new Commodity(id, c1.getName(), c1.getStyle(), c1.getStockQuantity(), inprice, outprice,
-							c1.getLastInPrice(), c1.getLastSalePrice(), c1.getStockAvgPrice(), Integer.parseInt(warning), c1.getTime(), c1.getCategoryId());
-					service.modCommodity(c2);
-				}catch(Exception e1){
-					e1.printStackTrace();
-				}
+				handleModCommodity(id, inprice, outprice, Integer.parseInt(warning));
 			}
 		}
 	};
@@ -170,4 +141,77 @@ public class CommodityViewImpl implements CommodityView {
 	ActionListener[] a = {addPanelAddHandler,addPanelResetHandler, delPanelSortHandler,delPanelResetHandler ,
 			modPanelSortHandler, modPanelModHandler,modPanelResetHandler};
 
+
+	@Override
+	public JInternalFrame getCommodityView() {
+		// TODO Auto-generated method stub
+		return gui;
+	}
+
+	@Override
+	public void handleAddCommodity(String s1, String s2, String s3, double d1,
+			double d2, int t) {
+		// TODO Auto-generated method stub
+		try {
+			service.addCommodity(s1,s2,s3,d1,d2,t,MainViewImpl.user.getId());
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void handleDelCommodity(String no) {
+		// TODO Auto-generated method stub
+		try{
+			service.delCommodity(no,MainViewImpl.user.getId());
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void handleSortCommodity(String no) {
+		// TODO Auto-generated method stub
+		try{
+			Commodity commodity = service.queryCommodity(no);
+			if(commodity==null){
+				gui.setDelPanelInfo("不存在",false);
+			}else {
+				gui.setDelPanelInfo(commodity.getName()+" "+commodity.getStyle(), true);
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+
+
+	@Override
+	public void handleModCommodity(String no,double p1,double p2,int w) {
+		// TODO Auto-generated method stub
+		try {
+			service.modCommodity(no, p1, p2, w,MainViewImpl.user.getId());
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void handleSortCommodity2(String no) {
+		// TODO Auto-generated method stub
+		try{
+			Commodity commodity = service.queryCommodity(no);
+			if(commodity==null){
+				;
+			}else {
+				gui.setModPanelInfo(commodity.getInPrice()+"",commodity.getOutPrice()+"",commodity.getWarningQuantity()+"");
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+	
+
 }
+	

@@ -128,7 +128,7 @@ public class AdministratorGUI extends JInternalFrame{
 	private void modPane(JTabbedPane pane){
 		JPanel jp= new JPanel();
 		JPanel jp1 = new JPanel();
-		JLabel jl1 = new JLabel("输入用户名：");
+		JLabel jl1 = new JLabel("输入id：");
 		jp1.add(jl1);
 		jp1.add(nameField);
 		jp1.add(sortbtn);

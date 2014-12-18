@@ -8,12 +8,12 @@ import java.util.ArrayList;
 import javax.swing.JInternalFrame;
 
 import com.model.Message;
-import com.remote_interface.IUserSerivce;
+import com.remote_interface.IUserService;
 import com.view.gui.MessageGUI;
 import com.view.vinterface.MessageView;
 
 public class MessageViewImpl implements MessageView{
-	private IUserSerivce service;
+	private IUserService service;
 	private MessageGUI gui;
 	
 	/*public MessageViewImpl(IUserSerivce s)throws Exception{

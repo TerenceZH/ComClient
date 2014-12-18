@@ -5,8 +5,13 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.util.ArrayList;
+
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -39,7 +44,10 @@ public class LogGUI extends JInternalFrame{
 		private JTable table;	
 		private MyTableModel tableModel;
 		private JTextField startTimeField,endTimeField;
-		private JButton button,button2;
+		private JComboBox<String> box;
+		private JButton button;
+		private String[] types = {"选择类别","商品","商品分类","客户","账户","进销","收付款","促销","用户"};
+		private String type = "";
 		
 		public LogPanel(){
 			super(new BorderLayout());
@@ -69,31 +77,44 @@ public class LogGUI extends JInternalFrame{
 			return endTimeField.getText().trim();
 		}
 		
-		public void addLogListeners(ActionListener []a){
-			if(a.length!=2){
-				return;
-			}
-			button.addActionListener(a[0]);
-			button2.addActionListener(a[1]);
+		public String getType(){
+			return type;
 		}
 		
-		public JPanel search(){
+		public void addLogListener(ActionListener a){
+			button.addActionListener(a);
+		}
+		
+		public JPanel search(){		
 			JPanel panel = new JPanel();
 			panel.setLayout(new FlowLayout());
 			JLabel lable1 = new JLabel("起始时间：");
 			JLabel lable2 = new JLabel("结束时间：");
 			startTimeField = new JTextField(10);
 			endTimeField = new JTextField(10);
+			
 			panel.add(lable1);
 			panel.add(startTimeField);
 			panel.add(lable2);
 			panel.add(endTimeField);
-
+			box = new JComboBox<String>();
+			for(int i=0;i<types.length;i++){
+				box.addItem(types[i]);
+			}
+			box.addItemListener(new ItemListener() {
+				
+				@Override
+				public void itemStateChanged(ItemEvent e) {
+					// TODO Auto-generated method stub
+					if(e.getStateChange()==ItemEvent.SELECTED){
+						type = (String)box.getSelectedItem();
+					}
+				}
+			});
+			panel.add(box);
 			button = new JButton("查询");
 			panel.add(button);
-			button2 = new JButton("显示全部");
-			panel.add(button2);
-
+		
 			return panel;
 		}
 		
@@ -101,7 +122,7 @@ public class LogGUI extends JInternalFrame{
 		 public class MyTableModel extends AbstractTableModel{
 			ArrayList<Log> logs = new ArrayList<Log>();
 			
-			private String[] columnNames ={"描述","时间"};
+			private String[] columnNames ={"类型","时间","操作"};
 			
 
 			public int getColumnCount(){
