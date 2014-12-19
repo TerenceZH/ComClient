@@ -37,6 +37,7 @@ public class MainViewImpl implements MainView{
 		default:
 			break;
 		}
+		user = u;
 		gui = new MainGUI(power, u.getUsername());
 		gui.addMainListeners(mainListeners);
 	}
@@ -97,7 +98,9 @@ public class MainViewImpl implements MainView{
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
-			
+			JInternalFrame view = new ImportViewImpl().getImportView();
+			gui.getContentPane().add(view);
+			view.setVisible(true);
 		}
 	};
 	
@@ -106,7 +109,9 @@ public class MainViewImpl implements MainView{
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
-			
+			JInternalFrame view = new ExportViewImpl().getExportView();
+			gui.getContentPane().add(view);
+			view.setVisible(true);
 		}
 	};
 	

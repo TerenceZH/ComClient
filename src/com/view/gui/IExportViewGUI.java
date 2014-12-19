@@ -1,17 +1,13 @@
 package com.view.gui;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
@@ -20,18 +16,21 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-public class ImportViewGUI extends JInternalFrame{
+import com.view.gui.ImportViewGUI.ItemFrame;
+
+public class IExportViewGUI extends JInternalFrame{
 	private JTabbedPane pane;
-	private JTextField customerField,warehouseField,operatorField,descField,totalField;
-	private JTextArea list;
-	private JButton addItemButton,addButton,getCancelableButton,getNextButton,addCancelButton;
-	private JTextField idField,customerField2,timeField,descField2,totalField2;
 	private ArrayList<String> commodityList = new ArrayList<String>();
 	private ItemFrame frame;
+	private JTextField customerField,warehouseField,operatorField,totalField,descField,discountField,djqField,totalField2;
+	private JButton addItemButton,addButton;
+	private JTextArea list;
 	
+	private JButton getCancelableButton,getNextButton,addCancelButton,calDiscountButton,getDjqButton;
+	private JTextField idField,customerField2,timeField,descField2,totalField3;
 	
-	public ImportViewGUI(){
-		super("进货单", true, true, false, true);
+	public IExportViewGUI(){
+		super("销售单", true, true, false, true);
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		this.setBounds(screenSize.width / 12, screenSize.height / 20,
 				screenSize.width / 2, screenSize.height / 2);
@@ -39,18 +38,24 @@ public class ImportViewGUI extends JInternalFrame{
 		this.setVisible(true);
 		frame = new ItemFrame();
 		frame.setVisible(false);
+		
+		setTotal("0");
+		setTotal2("0");
+		setTotal3("0");
+		setDiscount("0");
+		setDjq("0");
 	}
 
 	private JTabbedPane createTabbedPane() {
 		// TODO Auto-generated method stub
 		pane = new JTabbedPane();
-		addImportPanel( pane);
-		addCancelImportPanel( pane);
+		addExportPanel( pane);
+		addCancelExportPanel( pane);
 		
 		return pane;
 	}
 	
-	private void addImportPanel(JTabbedPane pane){
+	private void addExportPanel(JTabbedPane pane){
 		JPanel jp = new JPanel();
 		
 		JPanel jp1 = new JPanel();
@@ -82,11 +87,30 @@ public class ImportViewGUI extends JInternalFrame{
 		list = new JTextArea(5,20);
 		jjJPanel.add(list);
 		
+		JPanel jp9 = new JPanel();
+		discountField = new JTextField(7);
+		djqField = new JTextField(7);
+		totalField2 = new JTextField(10);
+		JLabel jl9 = new JLabel("折扣");
+		JLabel jl8 = new JLabel("代金券");
+//		calDiscountButton = new JButton("计算");
+		getDjqButton = new JButton("查看已有代金券");
+		jp9.add(jl9);
+		jp9.add(discountField);
+//		jp9.add(calDiscountButton);
+//		JPanel jp12 = new JPanel();
+		jp9.add(jl8);
+		jp9.add(djqField);
+		jp9.add(getDjqButton);
+		
 		JPanel jp5 = new JPanel();
 		JLabel jl6 = new JLabel("备注");
 		descField = new JTextField(15);;
 		jp5.add(jl6);
 		jp5.add(descField);
+		JLabel jl11 = new JLabel("总额：");
+		jp5.add(jl11);
+		jp5.add(totalField2);
 		
 		JPanel jp6 = new JPanel();
 		addButton = new JButton("添加");
@@ -98,14 +122,17 @@ public class ImportViewGUI extends JInternalFrame{
 		jp.add(jp3);
 		jp.add(jp4);
 		jp.add(jjJPanel);
+		jp.add(jp9);
+//		jp.add(jp12);
 		jp.add(jp5);
 		jp.add(jp6);
 		
-		pane.add("添加进货单",jp);
+		pane.add("添加销售单",jp);
 		
 	}
 	
-	private void addCancelImportPanel(JTabbedPane pane){
+	
+	private void addCancelExportPanel(JTabbedPane pane){
 		JPanel jp = new JPanel();
 		
 		JPanel jp1 = new JPanel();
@@ -119,11 +146,11 @@ public class ImportViewGUI extends JInternalFrame{
 		customerField2 = new JTextField(10);
 		timeField = new JTextField(10);
 		descField2 = new JTextField(15);
-		totalField2 = new JTextField(10);
+		totalField3 = new JTextField(10);
 		idField.setEditable(false);
 		customerField2.setEditable(false);
 		timeField.setEditable(false);
-		totalField2.setEditable(false);
+		totalField3.setEditable(false);
 		JLabel jl1 = new JLabel("编号：");
 		JLabel jl2 = new JLabel("客户：");
 		JLabel jl3 = new JLabel("时间：");
@@ -159,16 +186,18 @@ public class ImportViewGUI extends JInternalFrame{
 		pane.add("退货单",jp);
 	}
 	
-	//addItemButton,addButton,getCancelableButton,getNextButton,addCancelButton;
-	public void addImportListener(ActionListener[]a){
-		if(a.length!=5){
+	
+	public void addExportListener(ActionListener[]a){
+		if(a.length!=6){
 			return;
 		}
 		addItemButton.addActionListener(a[0]);
 		addButton.addActionListener(a[1]);
-		getCancelableButton.addActionListener(a[2]);
-		getNextButton.addActionListener(a[3]);
-		addCancelButton.addActionListener(a[4]);
+		getCancelableButton.addActionListener(a[3]);
+//		calDiscountButton.addActionListener(a[3]);
+		getDjqButton.addActionListener(a[2]);
+		getNextButton.addActionListener(a[4]);
+		addCancelButton.addActionListener(a[5]);
 	}
 	
 	public ItemFrame getFrame(){
@@ -192,6 +221,14 @@ public class ImportViewGUI extends JInternalFrame{
 		return descField.getText().trim();
 	}
 	
+	public String getDiscount(){
+		return discountField.getText().trim();
+	}
+	
+	public String getDjq(){
+		return djqField.getText().trim();
+	}
+	
 	public void setOperator(String s){
 		operatorField.setText(s);
 	}
@@ -212,6 +249,13 @@ public class ImportViewGUI extends JInternalFrame{
 		idField.setText(t);
 	}
 	
+	public void setDiscount(String s){
+		discountField.setText(s);
+	}
+
+	public void setDjq(String s){
+		djqField.setText(s);
+	}
 	//idField,customerField2,timeField,descField2,totalField2;
 	public void setCustomer(String s){
 		customerField2.setText(s);
@@ -227,6 +271,14 @@ public class ImportViewGUI extends JInternalFrame{
 	
 	public void setTotal2(String s){
 		totalField2.setText(s);
+	}
+	
+	public String getTotal2(){
+		return totalField2.getText().trim();
+	}
+	
+	public void setTotal3(String s){
+		totalField3.setText(s);
 	}
 	
 	public void addToList(String s){
